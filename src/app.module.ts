@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
-import { ProductsModule } from './products/products.module';
+import { ProductsModule } from './products/products.module'; // 👈 ১. এখানে ইমপোর্ট করুন
 
 @Module({
   imports: [
@@ -31,13 +31,14 @@ import { ProductsModule } from './products/products.module';
             host: configService.get<string>('REDIS_HOST'),
             port: configService.get<number>('REDIS_PORT'),
           },
-          ttl: 60 * 1000, // 60 seconds default cache TTL
+          ttl: 60 * 1000,
         }),
       }),
       inject: [ConfigService],
     }),
 
-    ProductsModule,
+    // Feature Modules
+    ProductsModule, // 👈 ২. এখানে এড করে দিন
   ],
 })
 export class AppModule {}
